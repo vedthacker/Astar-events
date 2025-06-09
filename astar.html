@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astar Events</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins&display=swap" rel="stylesheet">
+  <style>
+        @keyframes pulse {
+    0% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
+    50% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.7); }
+    100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background-color: #000;
+      color: #fff;
+      overflow-x: hidden;
+    }
+    header {
+      text-align: center;
+      padding: 40px 20px 10px;
+    }
+    .logo {
+      width: 180px;
+      height: auto;
+    }
+    .slideshow-container {
+      position: relative;
+      width: 100%;
+      height: 90vh;
+      overflow: hidden;
+    }
+    .slides {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+    .slides.active {
+      opacity: 1;
+    }
+    .overlay-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #ffd700;
+      font-size: 3rem;
+      font-family: 'Playfair Display', serif;
+      text-shadow: 3px 3px 15px #000;
+      text-align: center;
+    }
+    .intro {
+      padding: 80px 20px;
+      background: linear-gradient(180deg, #111, #000);
+      text-align: center;
+    }
+    .intro h1 {
+      color: #ffd700;
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      font-family: 'Playfair Display', serif;
+    }
+    .intro p {
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin: 0 auto;
+      color: #ccc;
+      line-height: 1.8;
+    }
+    .quote {
+      margin-top: 30px;
+      font-style: italic;
+      color: #aaa;
+    }
+    .buttons {
+      margin: 60px auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .buttons a {
+      padding: 14px 32px;
+      border-radius: 50px;
+      background: linear-gradient(145deg, #ffd700, #e6c200);
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+      transition: 0.3s ease;
+    }
+    .buttons a:hover {
+      background: #fff700;
+      box-shadow: 0 0 20px rgba(255, 255, 100, 0.6);
+    }
+    footer {
+      background: #111;
+      color: #888;
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 0.95rem;
+    }
+    footer a {
+      color: #ffd700;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+    <header>
+        <div style="
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 40px 0 20px;">
+          
+          <div style="
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle at center, #ffd700 0%, #111 60%);
+            border-radius: 50%;
+            padding: 15px;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+            animation: pulse 3s infinite;">
+            
+            <img src="logo.jpeg" alt="Astar Events Logo" class="logo" style="width: 100%; height: auto; border-radius: 50%;">
+          </div>
+      
+          <h2 style="margin-top: 15px; color: #ffd700; font-family: 'Playfair Display', serif; font-size: 1.5rem;">
+            Your Moment. Our Magic.
+          </h2>
+        </div>
+      </header>
+      
+
+  <div class="slideshow-container">
+    <img src="wedding2.jpg" class="slides active" alt="Slide 1">
+    <img src="wedding1.png" class="slides" alt="Slide 2">
+    <img src="wedding3.png" class="slides" alt="Slide 3">
+    <img src="wedding4.png" class="slides" alt="Slide 4">
+    <img src="wedding5.jpg" class="slides" alt="Slide 5">
+    <div class="overlay-text">Crafting Events, Creating Memories</div>
+  </div>
+
+  <section class="intro">
+    <h1>Welcome to Astar Events</h1>
+    <p>
+      Based in the heart of Kutch Gandhidham, Where every detail speaks perfection — Astar Events brings your vision to life. Whether it's a luxurious wedding, an energetic birthday bash, a refined corporate gala, or a vibrant cultural festival, our creative and professional team ensures every detail is flawless.
+    </p>
+    <p class="quote">“Because every event deserves a star treatment.”</p>
+  </section>
+
+  <section class="buttons">
+    <a href="weddings.html">Weddings</a>
+    <a href="birthdays.html">Birthdays</a>
+    <a href="corporate.html">Corporate Events</a>
+    <a href="festivals.html">Festivals</a>
+    <a href="contact.html">Contact Us</a>
+  </section>
+
+  <footer>
+    <p>© 2025 Astar Events | Follow us on <a href="https://www.instagram.com/astar_event?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">Instagram</a> | Call: +91-7016753704</p>
+  </footer>
+
+  <script>
+    const slides = document.querySelectorAll('.slides');
+    let index = 0;
+
+    function showNextSlide() {
+      slides[index].classList.remove('active');
+      index = (index + 1) % slides.length;
+      slides[index].classList.add('active');
+    }
+
+    setInterval(showNextSlide, 3500);
+  </script>
+</body>
+</html>
