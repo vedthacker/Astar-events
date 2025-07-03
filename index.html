@@ -120,9 +120,67 @@
     100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
   }
 
+    #curtain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: flex;
+  background: #000;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.curtain-left, .curtain-right {
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, #000, #222);
+  animation: curtainOpen 2.8s ease forwards;
+}
+
+.curtain-left {
+  border-right: 2px solid #ffd700;
+  animation-delay: 0.5s;
+}
+
+.curtain-right {
+  border-left: 2px solid #ffd700;
+  animation-delay: 0.5s;
+}
+
+@keyframes curtainOpen {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.curtain-right {
+  animation-name: curtainOpenRight;
+}
+
+@keyframes curtainOpenRight {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+
   </style>
 </head>
 <body>
+  <div id="curtain">
+  <div class="curtain-left"></div>
+  <div class="curtain-right"></div>
+  </div>
+
    <header style="text-align: center; padding: 60px 20px 40px; background: linear-gradient(to bottom, #000, #111);">
   <div style="
     display: flex;
@@ -280,6 +338,15 @@
     }
 
     setInterval(showNextSlide, 3500);
+
+    window.addEventListener("load", () => {
+    setTimeout(() => {
+      const curtain = document.getElementById("curtain");
+      if (curtain) {
+        curtain.style.display = "none";
+      }
+    }, 3000); // duration matches animation
+  });
   </script>
 </body>
 </html>
