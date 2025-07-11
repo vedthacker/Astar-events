@@ -51,6 +51,69 @@
       padding: 20px;
       color: #888;
     }
+    .gallery {
+  padding: 60px 20px;
+  background-color: #111;
+  text-align: center;
+}
+
+.gallery-heading {
+  color: #ffd700;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  margin-bottom: 30px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.gallery-grid img:hover {
+  transform: scale(1.03);
+}
+
+/* Lightbox viewer */
+.lightbox {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.lightbox img {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 3rem;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+}
+
   </style>
 </head>
 <body>
@@ -63,6 +126,8 @@
     </p>
   </div>
   <section class="gallery">
+  <h2 class="gallery-heading">Our Photo Gallery</h2>
+  <div class="gallery-grid">
     <img src="wedding1.png" alt="Wedding Photo 1">
     <img src="wedding2.jpg" alt="Wedding Photo 2">
     <img src="wedding3.png" alt="Wedding Photo 3">
@@ -71,9 +136,59 @@
     <img src="wedding6.jpg" alt="Wedding Photo 6">
     <img src="wedding7.jpg" alt="Wedding Photo 7">
     <img src="wedding8.jpg" alt="Wedding Photo 8">
-  </section>
+    <img src="wedding9.jpg" alt="Wedding Photo 9">
+    <img src="wedding10.jpg" alt="Wedding Photo 10">
+    <img src="wedding11.jpg" alt="Wedding Photo 11">
+    <img src="wedding12.jpg" alt="Wedding Photo 12">
+    <img src="wedding13.jpg" alt="Wedding Photo 13">
+    <img src="wedding14.jpg" alt="Wedding Photo 14">
+    <img src="wedding15.jpg" alt="Wedding Photo 15">
+    <img src="wedding16.jpg" alt="Wedding Photo 16">
+    <img src="wedding17.jpg" alt="Wedding Photo 17">
+    <img src="wedding18.jpg" alt="Wedding Photo 18">
+    <img src="wedding19.jpg" alt="Wedding Photo 19">
+    <img src="wedding20.jpg" alt="Wedding Photo 20">
+    <img src="wedding21.jpg" alt="Wedding Photo 21">
+    <img src="wedding22.jpg" alt="Wedding Photo 22">
+    <img src="wedding23.jpg" alt="Wedding Photo 23">
+    <img src="wedding24.jpg" alt="Wedding Photo 24">
+    <img src="wedding25.jpg" alt="Wedding Photo 25">
+    <img src="wedding26.jpg" alt="Wedding Photo 26">
+  </div>
+</section>
+
+<!-- Lightbox Viewer -->
+<div class="lightbox" id="lightbox">
+  <img src="" alt="Enlarged" id="lightbox-img" />
+  <span class="close-btn" onclick="closeLightbox()">×</span>
+</div>
+
   <footer>
     <p>© 2025 Astar Events | <a href="index.html" style="color: #ffd700; text-decoration: none;">Back to Home</a></p>
   </footer>
+ <script>
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const galleryImages = document.querySelectorAll('.gallery-grid img');
+
+  galleryImages.forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightbox.style.display = 'flex';
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.style.display = 'none';
+  }
+
+  // Tap outside image to close
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox || e.target === lightboxImg) {
+      closeLightbox();
+    }
+  });
+</script>
+
 </body>
 </html>
