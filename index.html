@@ -120,19 +120,20 @@
     100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
   }
 
-  .curtain-wrapper {
+ /* CURTAIN WRAPPER */
+.curtain-wrapper {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: 9999;
+  display: flex;
   background: #000;
-  pointer-events: none;
   overflow: hidden;
+  pointer-events: none;
 }
 
+/* CURTAIN PANELS */
 .curtain {
   width: 50%;
   height: 100%;
@@ -164,19 +165,21 @@
   100% { transform: translateX(100%); }
 }
 
-/* Welcome text */
+/* WELCOME TEXT */
 #welcome-overlay {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  text-align: center;
   color: #ffd700;
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-family: 'Playfair Display', serif;
   text-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
   opacity: 0;
   animation: welcomeZoom 2.5s ease-in-out forwards;
-  animation-delay: 0.5s; /* appears during curtain movement */
+  animation-delay: 0.5s;
+  padding: 0 10px;
 }
 
 @keyframes welcomeZoom {
@@ -189,6 +192,14 @@
     transform: translate(-50%, -50%) scale(1);
   }
 }
+
+/* RESPONSIVE ADJUSTMENTS */
+@media (max-width: 600px) {
+  #welcome-overlay {
+    font-size: 1.7rem;
+  }
+}
+
 
 
     
@@ -367,19 +378,14 @@
     setInterval(showNextSlide, 3500);
 
    
+
   window.addEventListener("load", () => {
     setTimeout(() => {
       const curtain = document.querySelector('.curtain-wrapper');
       if (curtain) curtain.style.display = 'none';
-    }, 1500); // Matches animation timing
+    }, 3500); // After animation ends
   });
 
-    window.addEventListener("load", () => {
-    setTimeout(() => {
-      const curtain = document.querySelector('.curtain-wrapper');
-      if (curtain) curtain.style.display = 'none';
-    }, 3500); // After curtain and welcome animations finish
-  });
 
 
   </script>
