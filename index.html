@@ -305,15 +305,17 @@
   </style>
 </head>
 <body>
-<div class="curtain-wrapper">
+
+  <div class="curtain-wrapper">
   <div class="curtain curtain-left"></div>
   <div class="curtain curtain-right"></div>
-  <div class="star-welcome-overlay" id="star-welcome">
-  <div class="stars"></div>
-  <h1 class="welcome-text">Welcome to Astar Events</h1>
+  <div id="welcome-overlay">
+    <h1>Welcome to Astar Events</h1>
+  </div>
 </div>
 
-</div>
+
+
 
 
 
@@ -504,9 +506,9 @@
 
   window.addEventListener("load", () => {
     setTimeout(() => {
-    const overlay = document.getElementById('star-welcome');
-    if (overlay) overlay.style.display = 'none';
-  }, 1000); 
+      const curtain = document.querySelector('.curtain-wrapper');
+      if (curtain) curtain.style.display = 'none';
+    }, 1000); 
   });
 
   const videos = [
