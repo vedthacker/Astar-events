@@ -241,6 +241,62 @@
   z-index: 1;
 }
 
+    .star-welcome-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: #000;
+  overflow: hidden;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  animation: fadeOut 2.5s ease 2.5s forwards;
+}
+
+.stars {
+  position: absolute;
+  width: 100%; height: 100%;
+  background: transparent;
+  background-image: radial-gradient(#ffd700 1px, transparent 1px);
+  background-size: 3px 3px;
+  animation: starTwinkle 2s infinite linear;
+  opacity: 0.6;
+}
+
+.welcome-text {
+  font-size: 2.8rem;
+  color: #ffd700;
+  font-family: 'Playfair Display', serif;
+  text-shadow: 0 0 20px #ffd700;
+  z-index: 2;
+  animation: welcomeZoomIn 2s ease;
+}
+
+@keyframes starTwinkle {
+  0% { background-position: 0 0; }
+  100% { background-position: 100px 100px; }
+}
+
+@keyframes welcomeZoomIn {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
 
     
 
@@ -252,9 +308,11 @@
 <div class="curtain-wrapper">
   <div class="curtain curtain-left"></div>
   <div class="curtain curtain-right"></div>
-  <div id="welcome-overlay">
-    <h1>Welcome to Astar Events</h1>
-  </div>
+  <div class="star-welcome-overlay" id="star-welcome">
+  <div class="stars"></div>
+  <h1 class="welcome-text">Welcome to Astar Events</h1>
+</div>
+
 </div>
 
 
@@ -446,9 +504,9 @@
 
   window.addEventListener("load", () => {
     setTimeout(() => {
-      const curtain = document.querySelector('.curtain-wrapper');
-      if (curtain) curtain.style.display = 'none';
-    }, 2200); // After animation ends
+    const overlay = document.getElementById('star-welcome');
+    if (overlay) overlay.style.display = 'none';
+  }, 1000); 
   });
 
   const videos = [
