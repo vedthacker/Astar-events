@@ -200,6 +200,46 @@
   }
 }
 
+.cinematic-section {
+  background-color: #000;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.cinematic-heading {
+  color: #ffd700;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  text-shadow: 2px 2px 8px #000;
+}
+
+.video-container {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  height: 60vh;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+}
+
+.event-video {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  border-radius: 20px;
+}
+
+/* Show the video currently playing */
+.event-video.active {
+  opacity: 1;
+  z-index: 1;
+}
 
 
     
@@ -287,6 +327,16 @@
     <a href="contact.html">Contact Us</a>
   </section>
 
+<section class="cinematic-section">
+  <h2 class="cinematic-heading">Experience the Magic of Astar Events</h2>
+  <div class="video-container">
+    <video id="video1" class="event-video" muted playsinline></video>
+    <video id="video2" class="event-video" muted playsinline></video>
+    <video id="video3" class="event-video" muted playsinline></video>
+  </div>
+</section>
+
+  
   <section style="background: #111; padding: 80px 20px; text-align: center;">
   <h2 style="color: #ffd700; font-size: 2.5rem; font-family: 'Playfair Display', serif; margin-bottom: 40px;">
     What Our Clients Say ✨
@@ -310,7 +360,7 @@
       <p style="font-size: 1.05rem; color: #eee; line-height: 1.6;">
         “Highly recommend A-star event's management team for their exceptional service. They played a significant role in making our brother's special day memorable, stress-free, and filled with joy. Thank you for going above and beyond to ensure everything ran smoothly, allowing us to focus on creating lasting memories with our loved ones.”
       </p>
-      <p style="margin-top: 15px; font-weight: bold; color: #ffd700;">– Vastral Thacker</p>
+      <p style="margin-top: 15px; font-weight: bold; color: #ffd700;">– Vatsal Thacker</p>
     </div>
 
     <div style="
@@ -386,7 +436,35 @@
     }, 2200); // After animation ends
   });
 
+  const videos = [
+    { id: "video1", src: "video1.mp4" },
+    { id: "video2", src: "video2.mp4" },
+    { id: "video3", src: "video3.mp4" },
+  ];
 
+  let current = 0;
+
+  function playNextVideo() {
+    const total = videos.length;
+    const currentVideo = document.getElementById(videos[current].id);
+    
+    // Remove all active classes
+    document.querySelectorAll('.event-video').forEach(v => v.classList.remove('active'));
+
+    // Set up and play current video
+    currentVideo.src = videos[current].src;
+    currentVideo.load();
+    currentVideo.classList.add("active");
+    currentVideo.play();
+
+    currentVideo.onended = () => {
+      current = (current + 1) % total;
+      playNextVideo();
+    };
+  }
+
+  window.addEventListener("DOMContentLoaded", playNextVideo);
+    
 
   </script>
 </body>
