@@ -120,7 +120,7 @@
     100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
   }
 
-   .curtain-wrapper {
+  .curtain-wrapper {
   position: fixed;
   top: 0;
   left: 0;
@@ -128,8 +128,9 @@
   height: 100%;
   display: flex;
   z-index: 9999;
-  pointer-events: none;
   background: #000;
+  pointer-events: none;
+  overflow: hidden;
 }
 
 .curtain {
@@ -146,11 +147,11 @@
 }
 
 .curtain-left {
-  animation: curtainLeftOpen 2.5s ease forwards;
+  animation: curtainLeftOpen 3s ease forwards;
 }
 
 .curtain-right {
-  animation: curtainRightOpen 2.5s ease forwards;
+  animation: curtainRightOpen 3s ease forwards;
 }
 
 @keyframes curtainLeftOpen {
@@ -163,59 +164,46 @@
   100% { transform: translateX(100%); }
 }
 
-    #welcome-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9998;
-  width: 100%;
-  height: 100%;
-  background-color: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: fadeOut 2s ease 3s forwards;
-  pointer-events: none;
-}
-
-#welcome-overlay h1 {
-  font-family: 'Playfair Display', serif;
+/* Welcome text */
+#welcome-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   color: #ffd700;
   font-size: 3rem;
-  text-shadow: 2px 2px 10px rgba(255, 215, 0, 0.5);
-  animation: zoomFadeIn 1.5s ease-out;
+  font-family: 'Playfair Display', serif;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+  opacity: 0;
+  animation: welcomeZoom 2.5s ease-in-out forwards;
+  animation-delay: 0.5s; /* appears during curtain movement */
 }
 
-@keyframes zoomFadeIn {
+@keyframes welcomeZoom {
   0% {
     opacity: 0;
-    transform: scale(0.7);
+    transform: translate(-50%, -50%) scale(0.7);
   }
   100% {
     opacity: 1;
-    transform: scale(1);
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
-@keyframes fadeOut {
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
+
+    
 
 
 
   </style>
 </head>
 <body>
- <div class="curtain-wrapper">
+<div class="curtain-wrapper">
   <div class="curtain curtain-left"></div>
   <div class="curtain curtain-right"></div>
-</div>
-
   <div id="welcome-overlay">
-  <h1>Welcome to Astar Events</h1>
+    <h1>Welcome to Astar Events</h1>
+  </div>
 </div>
 
 
@@ -384,6 +372,13 @@
       const curtain = document.querySelector('.curtain-wrapper');
       if (curtain) curtain.style.display = 'none';
     }, 1500); // Matches animation timing
+  });
+
+    window.addEventListener("load", () => {
+    setTimeout(() => {
+      const curtain = document.querySelector('.curtain-wrapper');
+      if (curtain) curtain.style.display = 'none';
+    }, 3500); // After curtain and welcome animations finish
   });
 
 
