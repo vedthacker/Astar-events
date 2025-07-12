@@ -23,6 +23,29 @@
       color: #fff;
       overflow-x: hidden;
     }
+    
+    .welcome-logo {
+  height: 60px;
+  vertical-align: middle;
+  margin-left: 10px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+  animation: logoFadeIn 1.2s ease forwards;
+  opacity: 0;
+}
+
+@keyframes logoFadeIn {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+    
     header {
       text-align: center;
       padding: 40px 20px 10px;
@@ -309,9 +332,13 @@
   <div class="curtain-wrapper">
   <div class="curtain curtain-left"></div>
   <div class="curtain curtain-right"></div>
-  <div id="welcome-overlay">
-    <h1>Welcome to Astar Events</h1>
-  </div>
+   <div class="star-welcome-overlay" id="star-welcome">
+  <div class="stars"></div>
+  <h1 class="welcome-text">
+    Welcome to <img src="logo.jpeg" alt="Astar Events Logo" class="welcome-logo">
+  </h1>
+</div>
+
 </div>
 
 
