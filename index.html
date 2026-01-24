@@ -6,10 +6,10 @@
   <title>Astar Events</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins&display=swap" rel="stylesheet">
   <style>
-        @keyframes pulse {
-    0% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
-    50% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.7); }
-    100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
+      50% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.7); }
+      100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
     }
 
     * {
@@ -25,25 +25,25 @@
     }
     
     .welcome-logo {
-  height: 60px;
-  vertical-align: middle;
-  margin-left: 10px;
-  border-radius: 50%;
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
-  animation: logoFadeIn 1.2s ease forwards;
-  opacity: 0;
-}
+      height: 60px;
+      vertical-align: middle;
+      margin-left: 10px;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+      animation: logoFadeIn 1.2s ease forwards;
+      opacity: 0;
+    }
 
-@keyframes logoFadeIn {
-  from {
-    transform: scale(0.5);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
+    @keyframes logoFadeIn {
+      from {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
 
     
     header {
@@ -143,7 +143,7 @@
     100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
   }
 
- /* CURTAIN WRAPPER */
+  /* CURTAIN WRAPPER */
 .curtain-wrapper {
   position: fixed;
   top: 0; left: 0;
@@ -264,8 +264,6 @@
   z-index: 1;
 }
 
-
-
     .star-welcome-overlay {
   position: fixed;
   top: 0; left: 0;
@@ -385,9 +383,32 @@
   to { opacity: 1; transform: scale(1); }
 }
 
-    
-
-
+/* --- ADDED: ASTAR BOT CSS --- */
+    .hero-chat-wrapper {
+        width: 100%;
+        max-width: 450px;
+        height: 400px;
+        margin-top: 30px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(255, 215, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        border: 1px solid rgba(255, 215, 0, 0.3);
+        text-align: left;
+    }
+    .hero-chat-header { background: #111; padding: 12px; color: #ffd700; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333; }
+    .hero-chat-box { flex: 1; padding: 15px; overflow-y: auto; background: #f4f4f4; display: flex; flex-direction: column; gap: 10px; }
+    .hero-message { max-width: 85%; padding: 8px 12px; border-radius: 12px; font-size: 13px; line-height: 1.4; color: #000; }
+    .hero-message.bot { background: white; border: 1px solid #ddd; align-self: flex-start; border-bottom-left-radius: 2px; }
+    .hero-message.user { background: #ffd700; color: black; align-self: flex-end; border-bottom-right-radius: 2px; font-weight: 500; }
+    .hero-input-area { padding: 10px; background: white; border-top: 1px solid #ddd; display: flex; gap: 8px; }
+    .hero-input-area input { flex: 1; border: 1px solid #ccc; border-radius: 20px; padding: 8px 15px; outline: none; font-size: 13px; color: #000; }
+    .hero-input-area button { background: #000; color: #ffd700; border: none; padding: 0 15px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+    .hero-input-area button:hover { background: #333; }
+    .hero-message a { color: #007bff; text-decoration: none; font-weight: bold; }
+/* --- END ASTAR BOT CSS --- */
 
   </style>
 </head>
@@ -402,10 +423,6 @@
     <img src="logo.jpeg" alt="Astar Events Logo" class="intro-logo" />
   </div>
 </div>
-
-
-
-
 
 
    <header style="text-align: center; padding: 60px 20px 40px; background: linear-gradient(to bottom, #000, #111);">
@@ -446,7 +463,28 @@
     ">
       Creating Timeless Moments with Passion, Precision, and a Touch of Gold ✨
     </p>
-  </div>
+
+    <div class="hero-chat-wrapper">
+        <div class="hero-chat-header">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="#ffd700"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path></svg>
+            <div>
+                <h4 style="margin:0; font-size:14px; font-weight:600;">Plan Your Event</h4>
+                <span style="font-size:10px; color:#4ade80;">● Online</span>
+            </div>
+        </div>
+
+        <div class="hero-chat-box" id="heroChatBox">
+            <div class="hero-message bot">
+                <p>👋 Welcome to Astar Events! Are you planning a Wedding, Party, or Corporate event?</p>
+            </div>
+        </div>
+
+        <div class="hero-input-area">
+            <input type="text" id="heroUserInput" placeholder="Ask about price, decor..." />
+            <button onclick="handleHeroChat()">➤</button>
+        </div>
+    </div>
+    </div>
 </header>
 
       
@@ -592,7 +630,7 @@
 
     setInterval(showNextSlide, 3500);
 
-   
+    
 
 
   // Remove intro after 1.6 seconds
@@ -631,6 +669,70 @@
   }
 
   window.addEventListener("DOMContentLoaded", playNextVideo);
+
+  // --- ADDED: ASTAR BOT JS LOGIC ---
+  const chatBox = document.getElementById('heroChatBox');
+  const userInput = document.getElementById('heroUserInput');
+
+  const REPLIT_URL = "https://astar-bot-backend--theveraciouss.replit.app"; 
+
+  function addMessage(text, sender) {
+      const div = document.createElement('div');
+      div.classList.add('hero-message', sender);
+      
+      let content = text;
+      // Scroll/Image Logic
+      if (content.includes("{{SHOW_WEDDING_IMG}}")) {
+          content = content.replace("{{SHOW_WEDDING_IMG}}", "") + `<br><img src="wedding2.jpg" style="width:100%; border-radius:8px; margin-top:5px;">`;
+      } 
+      else if (content.includes("{{SCROLL_TO_CONTACT}}")) {
+            content = content.replace("{{SCROLL_TO_CONTACT}}", "");
+            document.querySelector('.buttons').scrollIntoView({behavior: "smooth"});
+      }
+
+      // Link Logic
+      content = content.replace(/(\+91\s?[0-9]{5}\s?[0-9]{5})/g, '<a href="tel:$1">$1</a>');
+      content = content.replace(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi, '<a href="mailto:$1">$1</a>');
+
+      div.innerHTML = `<p>${content}</p>`;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  async function handleHeroChat() {
+      const message = userInput.value.trim();
+      if (!message) return;
+
+      addMessage(message, 'user');
+      userInput.value = '';
+      
+      const loadingId = "load-" + Date.now();
+      const loadDiv = document.createElement('div');
+      loadDiv.className = 'hero-message bot';
+      loadDiv.id = loadingId;
+      loadDiv.innerHTML = '<p><i>Thinking...</i></p>';
+      chatBox.appendChild(loadDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      try {
+          const response = await fetch(REPLIT_URL, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ message: message })
+          });
+          const data = await response.json();
+          document.getElementById(loadingId).remove();
+          addMessage(data.reply, 'bot');
+      } catch (error) {
+          document.getElementById(loadingId).remove();
+          addMessage("⚠️ Network error. Check internet.", 'bot');
+      }
+  }
+
+  userInput.addEventListener("keypress", function(e) {
+      if (e.key === "Enter") handleHeroChat();
+  });
+  // --- END ASTAR BOT JS LOGIC ---
 
   </script>
 </body>
