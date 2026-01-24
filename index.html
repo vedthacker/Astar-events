@@ -619,7 +619,7 @@
   </footer>
 
   <script>
-  // --- 1. SLIDESHOW & VIDEO LOGIC (Keep this) ---
+  // --- 1. KEEP YOUR SLIDESHOW & VIDEO (DO NOT TOUCH) ---
   const slides = document.querySelectorAll('.slides');
   let index = 0;
   function showNextSlide() {
@@ -649,7 +649,98 @@
   window.addEventListener("DOMContentLoaded", playNextVideo);
 
 
+  // --- 2. COHERE BOT LOGIC (Stable & Fast) ---
+  const chatBox = document.getElementById('heroChatBox');
+  const userInput = document.getElementById('heroUserInput');
 
+  // 🔴 PASTE YOUR COHERE API KEY HERE 🔴
+  const COHERE_KEY = "DstjHH1tfinFPszanmXKBb7wQUXqQDNd3oXBpEI3"; 
+
+  // The Bot's Personality
+  const PREAMBLE = `You are the AI Assistant for Astar Events (Owner: Aman Thacker).
+  - Contact: +91 70167 53704 | astareventsmedia@gmail.com
+  - Location: Gandhidham, Gujarat.
+  - Services: Weddings, Corporate, Birthdays.
+  - Tone: Professional, short, and helpful.
+  - If asked for photos, say "Here are some photos:" and add tag {{SHOW_WEDDING_IMG}}.
+  - If asked to book, add tag {{SCROLL_TO_CONTACT}}.`;
+
+  function appendText(text, sender) {
+      const div = document.createElement('div');
+      div.className = 'hero-message ' + sender;
+      
+      // Handle Special Tags (Photos/Scroll)
+      let cleanText = text.replace("{{SHOW_WEDDING_IMG}}", "").replace("{{SCROLL_TO_CONTACT}}", "");
+      
+      // Images logic
+      if (text.includes("{{SHOW_WEDDING_IMG}}")) {
+          cleanText += `<br><img src="wedding2.jpg" style="width:100%; border-radius:10px; margin-top:8px;">`;
+      }
+      
+      // Scroll logic
+      if (text.includes("{{SCROLL_TO_CONTACT}}")) {
+           setTimeout(() => document.querySelector('footer')?.scrollIntoView({ behavior: 'smooth' }), 1000);
+      }
+
+      // Make numbers clickable
+      cleanText = cleanText.replace(/(\+91\s?\d{5}\s?\d{5})/g, '<a href="tel:$1" style="color:#007bff;font-weight:bold;">$1</a>');
+
+      div.innerHTML = `<p>${cleanText}</p>`;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  async function handleHeroChat() {
+      const msg = userInput.value.trim();
+      if (!msg) return;
+
+      // Show User Msg
+      appendText(msg, 'user');
+      userInput.value = '';
+
+      // Show Thinking...
+      const loadId = "load-" + Date.now();
+      const loadDiv = document.createElement('div');
+      loadDiv.className = 'hero-message bot';
+      loadDiv.id = loadId;
+      loadDiv.innerHTML = '<p><i>Thinking...</i></p>';
+      chatBox.appendChild(loadDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      try {
+          // --- CALL COHERE API ---
+          const response = await fetch('https://api.cohere.ai/v1/chat', {
+              method: 'POST',
+              headers: {
+                  'Authorization': `Bearer ${COHERE_KEY}`,
+                  'Content-Type': 'application/json',
+                  'X-Client-Name': 'AstarEventsSite'
+              },
+              body: JSON.stringify({
+                  message: msg,
+                  preamble: PREAMBLE,
+                  model: "command-r" // This model is super smart and stable
+              })
+          });
+
+          const data = await response.json();
+          document.getElementById(loadId).remove();
+
+          if (data.text) {
+              appendText(data.text, 'bot');
+          } else {
+              console.error(data);
+              appendText("⚠️ Connection Error. Try again.", 'bot');
+          }
+
+      } catch (error) {
+          if(document.getElementById(loadId)) document.getElementById(loadId).remove();
+          console.error(error);
+          appendText("⚠️ Network Error.", 'bot');
+      }
+  }
+
+  userInput.addEventListener("keypress", (e) => { if (e.key === "Enter") handleHeroChat(); });
 </script>
 </body>
 </html>
