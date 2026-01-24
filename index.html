@@ -617,11 +617,8 @@
   <footer>
     <p>© 2025 Astar Events | Follow us on <a href="https://www.instagram.com/astar_event?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">Instagram</a> | Call: +91-7016753704</p>
   </footer>
-
   <script>
-  // =======================================================
-  // PART 1: SLIDESHOW & VIDEO LOGIC (Standard Code)
-  // =======================================================
+  // --- KEEPS SLIDESHOW & VIDEO WORKING ---
   const slides = document.querySelectorAll('.slides');
   let index = 0;
   function showNextSlide() {
@@ -651,218 +648,82 @@
   window.addEventListener("DOMContentLoaded", playNextVideo);
 
 
-  // =======================================================
-  // PART 2: THE "MEGA-LOGIC BOT" (Extremely Detailed)
-  // =======================================================
+  // --- 🤖 CONNECT TO REPLIT BACKEND ---
   const chatBox = document.getElementById('heroChatBox');
   const userInput = document.getElementById('heroUserInput');
 
-  // 🧠 THE BRAIN: 100+ Lines of Pure Event Logic
-  const botBrain = [
-    // --- 1. GREETINGS & BASICS ---
-    {
-      keywords: ["hi", "hello", "hey", "start", "greetings", "good morning", "namaste", "morning", "evening"],
-      response: "<b>Welcome to Astar Events!</b> 🙏<br>I am your personal event assistant. I can help you with:<br>💍 <b>Luxury Weddings</b> (Haldi, Sangeet, Reception)<br>🏢 <b>Corporate Events</b> (Launches, AGMs)<br>🎂 <b>Social Parties</b> (Birthdays, Anniversaries)<br><br><i>What are you planning today?</i>"
-    },
-    {
-      keywords: ["who are you", "what is this", "bot", "ai", "human"],
-      response: "I am the automated assistant for <b>Astar Events</b>. My job is to answer your questions about our services, pricing, and availability instantly, 24/7!"
-    },
-    {
-      keywords: ["thank", "thx", "cool", "great", "awesome", "bye", "goodbye"],
-      response: "You are very welcome! ✨ We can't wait to make your event spectacular. Feel free to call us at <b>+91-7016753704</b> when you are ready to book."
-    },
-
-    // --- 2. WEDDING CEREMONIES (Specifics) ---
-    {
-      keywords: ["wedding", "marriage", "shaadi", "vivah", "shadi"],
-      response: "<b>We create Fairy Tale Weddings.</b> 💍<br>We manage the entire 3-day saga:<br>1️⃣ <b>Pre-Wedding:</b> Haldi & Mehendi decor.<br>2️⃣ <b>The Big Day:</b> Baraat, Varmala, Pheras.<br>3️⃣ <b>Reception:</b> Grand stage & dinner.<br><br>Type <b>'Decor'</b> or <b>'Catering'</b> for details!"
-    },
-    {
-      keywords: ["haldi", "pithi", "yellow"],
-      response: "<b>The Haldi Ceremony 💛</b><br>We specialize in:<br>• <b>Floral Setup:</b> Marigold (Genda Phool) drapes.<br>• <b>Props:</b> Fun glasses, photo booths, and 'Bride-to-be' signage.<br>• <b>Entry:</b> Traditional Dhol welcome."
-    },
-    {
-      keywords: ["mehendi", "henna", "green"],
-      response: "<b>Mehendi Vibes 🌿</b><br>We offer colorful Bohemian themes, comfortable bridal seating (Jhula), and can arrange live folk singers or a DJ to keep the energy high."
-    },
-    {
-      keywords: ["sangeet", "dance", "performance", "choreography"],
-      response: "<b>Sangeet Night = Bollywood Night! 💃</b><br>We provide:<br>• <b>Stage:</b> LED Walls & Concert Lighting.<br>• <b>Sound:</b> Line Array systems for clear audio.<br>• <b>SFX:</b> Cold Pyros, CO2 Jets, and Confetti blasts for performances."
-    },
-    {
-      keywords: ["reception", "dinner", "stage"],
-      response: "<b>The Grand Reception ✨</b><br>We focus on elegance. Think Crystal Chandeliers, Pastel Florals, and a massive stage for the couple. We also manage the guest meet-and-greet flow seamlessly."
-    },
-    {
-      keywords: ["vara yatra", "baraat", "procession", "entry"],
-      response: "<b>The Royal Baraat 🥁</b><br>We arrange the Ghodi (Horse), Baggi (Chariot), Vintage Cars, and the best Nasik Dhol or Brass Band to make your entry unforgettable."
-    },
-
-    // --- 3. DESTINATION WEDDINGS ---
-    {
-      keywords: ["destination", "udaipur", "goa", "jaipur", "travel", "outstation"],
-      response: "<b>Destination Weddings ✈️</b><br>We are experts in managing weddings across India!<br>• <b>Rajasthan:</b> Udaipur, Jaipur, Jodhpur (Palace Themes)<br>• <b>Beach:</b> Goa, Diu<br>• <b>Logistics:</b> We handle hotel bookings and guest transport."
-    },
-
-    // --- 4. CORPORATE EVENTS ---
-    {
-      keywords: ["corporate", "office", "business", "seminar", "conference", "agm"],
-      response: "<b>Professional Corporate Management 🏢</b><br>We handle:<br>• <b>Product Launches:</b> Reveal mechanisms & branding.<br>• <b>Conferences:</b> LED screens, mics, and podiums.<br>• <b>Dealer Meets:</b> Entertainment & Gala dinners.<br>We ensure your brand looks premium."
-    },
-    {
-      keywords: ["exhibition", "stall", "expo"],
-      response: "<b>Exhibitions & Stalls 🖼️</b><br>We design and fabricate custom exhibition stalls with branding, counters, and lighting to help your business stand out."
-    },
-
-    // --- 5. SOCIAL EVENTS ---
-    {
-      keywords: ["birthday", "bday", "party", "kids"],
-      response: "<b>Birthday Bashes! 🎂</b><br>• <b>Kids:</b> Disney, Superhero, or Jungle themes with balloon art.<br>• <b>Adults:</b> Milestone parties (25th, 50th) with elegant decor and cocktails."
-    },
-    {
-      keywords: ["anniversary", "jubilee"],
-      response: "<b>Golden & Silver Jubilees 💑</b><br>Celebrate decades of love with a retro-themed party, musical night, or a family dinner gathering."
-    },
-
-    // --- 6. FOOD & CATERING ---
-    {
-      keywords: ["catering", "food", "menu", "dinner", "lunch", "buffet", "eat", "snack"],
-      response: "<b>The Soul of the Event: Food 🍽️</b><br>We offer premium catering services:<br>• <b>Cuisines:</b> North Indian, Gujarati, Pan-Asian, Mexican, Italian.<br>• <b>Live Counters:</b> Chaat, Pasta, Waffles, Mocktails.<br>• <b>Service:</b> Uniformed waiters and premium crockery."
-    },
-    {
-      keywords: ["cake", "dessert", "sweet"],
-      response: "<b>Sweet Tooth? 🍰</b><br>We arrange custom designer cakes (3-tier, fondant) and luxury dessert counters with pastries, halwa, and ice creams."
-    },
-
-    // --- 7. DECOR & THEMES ---
-    {
-      keywords: ["decor", "decoration", "flower", "floral", "mandap", "design", "theme"],
-      response: "<b>Decor is our Forté 🌸</b><br>We don't just put up flowers; we create environments.<br>• <b>Traditional:</b> Marigolds, Bells, Rajnigandha.<br>• <b>Modern:</b> Pastels, Crystals, Fairy Lights.<br>• <b>Themes:</b> Bollywood, Village, Royal Palace."
-    },
-
-    // --- 8. PHOTOGRAPHY & TECH ---
-    {
-      keywords: ["photo", "video", "photography", "cinematography", "shoot", "camera", "drone", "pre-wedding shoot"],
-      response: "<b>Cinematic Memories 📸</b><br>Our team uses 4K cameras, Drones, and Cranes.<br>• Candid Photography<br>• Cinematic Highlight Reels (Teasers)<br>• Live LED Screening<br>See a sample: {{SHOW_WEDDING_IMG}}"
-    },
-    {
-      keywords: ["sound", "light", "dj", "speaker", "mic", "audio"],
-      response: "<b>Concert-Grade Tech 🔊</b><br>We provide JBL/RCF Line Arrays for clear sound and Sharpy/Par Lights for dramatic effects. No feedback, no glitches, just great vibes."
-    },
-
-    // --- 9. COMPANY INFO ---
-    {
-      keywords: ["aman", "owner", "thacker", "founder", "boss", "ceo"],
-      response: "<b>Aman Thacker</b> is the visionary owner of Astar Events. With a passion for perfection, he personally oversees the planning of major events to ensure quality."
-    },
-    {
-      keywords: ["location", "address", "where", "city", "office", "gandhidham", "kutch", "gujarat", "area"],
-      response: "📍 <b>We are based in Gandhidham, Kutch.</b><br>However, we are not limited by geography. We manage events all across Gujarat and major Indian cities."
-    },
-    {
-      keywords: ["experience", "years", "trust", "why you"],
-      response: "<b>Why Choose Astar? 🏆</b><br>1. <b>Transparency:</b> No hidden costs.<br>2. <b>Quality:</b> We own much of our inventory (Decor/Sound).<br>3. <b>Team:</b> Experienced managers who handle chaos calmly."
-    },
-
-    // --- 10. PRICING & BOOKING ---
-    {
-      keywords: ["price", "cost", "rate", "budget", "expensive", "charge", "package", "lakh", "money", "rupees"],
-      response: "<b>Let's talk numbers 💰</b><br>Pricing depends on:<br>1. <b>Guest Count</b><br>2. <b>Venue Choice</b><br>3. <b>Menu Selection</b><br>We can work with your budget to give you the <i>best possible value</i>.<br>👉 Call <b>+91-7016753704</b> for a quote."
-    },
-    {
-      keywords: ["book", "appointment", "meeting", "reserve", "date", "contract"],
-      response: "<b>Ready to start? 📅</b><br>We recommend a face-to-face meeting or a video call to discuss your vision.<br>Please contact us to block your dates before they get sold out! {{SCROLL_TO_CONTACT}}"
-    },
-    {
-      keywords: ["contact", "call", "phone", "mobile", "number", "email", "reach", "whatsapp"],
-      response: "<b>Get in Touch! 📞</b><br>• <b>Call/WhatsApp:</b> <a href='tel:+917016753704'>+91 70167 53704</a><br>• <b>Email:</b> astareventsmedia@gmail.com<br><br><i>Click below to see our Contact Form:</i> {{SCROLL_TO_CONTACT}}"
-    }
-  ];
-
-  // --- LOGIC ENGINE ---
-
-  function findAnswer(input) {
-      input = input.toLowerCase();
-      let bestMatch = null;
-      let highestScore = 0;
-
-      // Scoring System: Find the most relevant answer
-      for (let item of botBrain) {
-          let score = 0;
-          for (let key of item.keywords) {
-              if (input.includes(key)) {
-                  score++;
-              }
-          }
-          // Boost score for exact keyword matches
-          if (score > highestScore) {
-              highestScore = score;
-              bestMatch = item.response;
-          }
-      }
-
-      if (bestMatch) return bestMatch;
-
-      // Smart Fallbacks based on input length or common confusion
-      if (input.length < 4) return "Could you please elaborate? Try asking about <b>Weddings</b>, <b>Decor</b>, or <b>Prices</b>.";
-      if (input.includes("?")) return "That's a great question! For a detailed answer, it's best to call Aman directly at <b>+91-7016753704</b>.";
-      
-      return "That sounds interesting! I can help you with <b>Catering</b>, <b>Decor</b>, or <b>Venue Selection</b>. <br>Which one are you looking for?";
-  }
+  // 🔴 REPLACE THIS WITH YOUR REPLIT URL + "/chat"
+  // Example: "https://Astar-Bot-Backend.yourname.replit.app/chat"
+  const BACKEND_URL = "https://astar-bot--thackerr.replit.app/chat"; 
 
   function appendText(text, sender) {
       const div = document.createElement('div');
       div.className = 'hero-message ' + sender;
       
-      // Clean tags
+      // Clean up tags
       let clean = text.replace("{{SHOW_WEDDING_IMG}}", "").replace("{{SCROLL_TO_CONTACT}}", "");
       
-      // Feature: Show Image
+      // Images
       if(text.includes("{{SHOW_WEDDING_IMG}}")) {
-          clean += '<br><img src="wedding2.jpg" style="width:100%; border-radius:10px; margin-top:10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">';
+          clean += '<br><img src="wedding2.jpg" style="width:100%;border-radius:8px;margin-top:5px;">';
       }
       
-      // Feature: Clickable Links
-      clean = clean.replace(/(\+91\s?\d{5}\s?\d{5})/g, '<a href="tel:$1" style="color:#007bff;font-weight:bold;text-decoration:none;">$1</a>');
+      // Phone Links
+      clean = clean.replace(/(\+91\s?\d{5}\s?\d{5})/g, '<a href="tel:$1" style="color:#007bff;font-weight:bold;">$1</a>');
 
       div.innerHTML = `<p>${clean}</p>`;
       chatBox.appendChild(div);
       chatBox.scrollTop = chatBox.scrollHeight;
 
-      // Feature: Auto-Scroll
+      // Auto Scroll
       if(text.includes("{{SCROLL_TO_CONTACT}}")) {
-          setTimeout(() => {
-              const footer = document.querySelector('footer') || document.body;
-              footer.scrollIntoView({behavior:'smooth'});
-          }, 1000);
+          setTimeout(() => document.querySelector('footer')?.scrollIntoView({behavior:'smooth'}), 1000);
       }
   }
 
-  function handleHeroChat() {
+  async function handleHeroChat() {
       const msg = userInput.value.trim();
       if (!msg) return;
 
       appendText(msg, 'user');
       userInput.value = '';
       
-      // Thinking...
+      // Thinking Bubble
       const loadId = "load-"+Date.now();
       const loadDiv = document.createElement('div');
       loadDiv.id = loadId;
       loadDiv.className = 'hero-message bot';
-      loadDiv.innerHTML = '<p><i style="color:#888;">Thinking...</i></p>';
+      loadDiv.innerHTML = '<p><i>Thinking...</i></p>';
       chatBox.appendChild(loadDiv);
       chatBox.scrollTop = chatBox.scrollHeight;
 
-      setTimeout(() => {
+      try {
+          const response = await fetch(BACKEND_URL, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ message: msg })
+          });
+
+          const data = await response.json();
           document.getElementById(loadId).remove();
-          const reply = findAnswer(msg);
-          appendText(reply, 'bot');
-      }, 700); 
+
+          if (data.reply) {
+              appendText(data.reply, 'bot');
+          } else {
+              appendText("⚠️ Error: " + (data.error || "Server issue"), 'bot');
+          }
+
+      } catch (error) {
+          if(document.getElementById(loadId)) document.getElementById(loadId).remove();
+          console.error(error);
+          appendText("⚠️ Network Error. Replit might be sleeping.", 'bot');
+      }
   }
 
   userInput.addEventListener("keypress", (e) => { if (e.key === "Enter") handleHeroChat(); });
 </script>
+
+ 
+
 </body>
 </html>
