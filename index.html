@@ -619,66 +619,53 @@
   </footer>
 
   <script>
-    const slides = document.querySelectorAll('.slides');
-    let index = 0;
+  // --- 1. KEEP SLIDESHOW & VIDEO CODE (Do not delete) ---
+  const slides = document.querySelectorAll('.slides');
+  let index = 0;
+  function showNextSlide() {
+    slides[index].classList.remove('active');
+    index = (index + 1) % slides.length;
+    slides[index].classList.add('active');
+  }
+  setInterval(showNextSlide, 3500);
 
-    function showNextSlide() {
-      slides[index].classList.remove('active');
-      index = (index + 1) % slides.length;
-      slides[index].classList.add('active');
-    }
-
-    setInterval(showNextSlide, 3500);
-
-    
-
-
-  // Remove intro after 1.6 seconds
   setTimeout(() => {
     const intro = document.getElementById('intro');
     if (intro) intro.style.display = 'none';
   }, 1600);
 
-
-
- const videos = [
+  const videos = [
     { id: "video1", src: "video1.mp4" },
     { id: "video2", src: "video2.mp4" },
     { id: "video3", src: "video3.mp4" },
   ];
-
   let current = 0;
-
   function playNextVideo() {
     const total = videos.length;
     const currentVideo = document.getElementById(videos[current].id);
-    
-    // Remove all active classes
     document.querySelectorAll('.event-video').forEach(v => v.classList.remove('active'));
-
-    // Set up and play current video
     currentVideo.src = videos[current].src;
     currentVideo.load();
     currentVideo.classList.add("active");
     currentVideo.play();
-
     currentVideo.onended = () => {
       current = (current + 1) % total;
       playNextVideo();
     };
   }
+  window.addEventListener("DOMContentLoaded", playNextVideo);
 
-  // --- NEW BOT LOGIC ---
+
+  // --- 2. "NUCLEAR" BOT CODE (Crash-Proof) ---
   const chatBox = document.getElementById('heroChatBox');
   const userInput = document.getElementById('heroUserInput');
 
-  // ⚠️ VERIFY THIS URL IS CORRECT (Ends in /chat)
+  // ⚠️ YOUR REPLIT URL
   const REPLIT_URL = "https://astar-bot-backend--theveraciouss.replit.app/chat"; 
 
-  function addMessage(text, sender) {
-      if (!text) return;
+  function appendText(text, className) {
       const div = document.createElement('div');
-      div.classList.add('hero-message', sender);
+      div.className = 'hero-message ' + className;
       div.innerHTML = `<p>${text}</p>`;
       chatBox.appendChild(div);
       chatBox.scrollTop = chatBox.scrollHeight;
@@ -688,17 +675,12 @@
       const message = userInput.value.trim();
       if (!message) return;
 
-      addMessage(message, 'user');
+      // 1. Show User Message
+      appendText(message, 'user');
       userInput.value = '';
-      
-      // Add Loading Bubble
-      const loadingId = "load-" + Date.now();
-      const loadDiv = document.createElement('div');
-      loadDiv.className = 'hero-message bot';
-      loadDiv.id = loadingId;
-      loadDiv.innerHTML = '<p><i>Thinking...</i></p>';
-      chatBox.appendChild(loadDiv);
-      chatBox.scrollTop = chatBox.scrollHeight;
+
+      // 2. Show Thinking Text (We will NOT try to remove this, to prevent crashes)
+      appendText("<i>Thinking...</i>", 'bot');
 
       try {
           const response = await fetch(REPLIT_URL, {
@@ -707,28 +689,29 @@
               body: JSON.stringify({ message: message })
           });
 
+          // 3. Get the answer
           const data = await response.json();
-          
-          // Remove Loading Bubble SAFELY
-          const loader = document.getElementById(loadingId);
-          if (loader) loader.remove();
 
-          // Show the Reply (or the Error Message)
-          addMessage(data.reply, 'bot');
+          // 4. Show the Answer (or the Error)
+          if (data.reply) {
+              appendText(data.reply, 'bot');
+          } else if (data.error) {
+              appendText("❌ SERVER ERROR: " + data.error, 'bot');
+              alert("Server Error: " + data.error);
+          } else {
+              appendText("⚠️ Empty response from server", 'bot');
+          }
 
       } catch (error) {
-          // Remove Loading Bubble SAFELY
-          const loader = document.getElementById(loadingId);
-          if (loader) loader.remove();
-          
-          console.error("Network Error:", error);
-          addMessage("⚠️ Connection Failed. check Replit Console.", 'bot');
+          console.error(error);
+          appendText("❌ NETWORK ERROR. See Console.", 'bot');
+          alert("Network Error: " + error.message);
       }
   }
 
   userInput.addEventListener("keypress", function(e) {
       if (e.key === "Enter") handleHeroChat();
   });
-  </script>
+</script>
 </body>
 </html>
