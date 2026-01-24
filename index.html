@@ -706,6 +706,7 @@
       addMessage(message, 'user');
       userInput.value = '';
       
+      // Create Loading ID
       const loadingId = "load-" + Date.now();
       const loadDiv = document.createElement('div');
       loadDiv.className = 'hero-message bot';
@@ -720,12 +721,28 @@
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ message: message })
           });
+
+          // Helper to safely remove loader
+          const safeRemove = () => {
+              const el = document.getElementById(loadingId);
+              if (el) el.remove();
+          };
+
+          if (!response.ok) {
+              throw new Error(`Server Error: ${response.status}`);
+          }
+
           const data = await response.json();
-          document.getElementById(loadingId).remove();
+          safeRemove(); // Remove loader safely
           addMessage(data.reply, 'bot');
+
       } catch (error) {
-          document.getElementById(loadingId).remove();
-          addMessage("⚠️ Network error. Check internet.", 'bot');
+          // Safely remove loader if it exists
+          const el = document.getElementById(loadingId);
+          if (el) el.remove();
+          
+          console.error("Bot Error:", error);
+          addMessage("⚠️ Connection issue. Please try again.", 'bot');
       }
   }
 
