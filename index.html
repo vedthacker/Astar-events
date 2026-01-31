@@ -478,6 +478,7 @@
                 <p>👋 Welcome to Astar Events! Are you planning a Wedding, Party, or Corporate event?</p>
             </div>
         </div>
+        <div id="botButtons"></div>
 
         <div class="hero-input-area">
             <input type="text" id="heroUserInput" placeholder="Ask about price, decor..." />
@@ -655,17 +656,18 @@ function playNextVideo(){
 }
 window.addEventListener("DOMContentLoaded",playNextVideo);
 
-
 /* =======================================================
-   ASTAR EVENTS – WHATSAPP STYLE BUTTON BOT
+   ASTAR EVENTS – FIXED WHATSAPP STYLE BOT (FINAL)
 ======================================================= */
 
 const chatBox=document.getElementById("heroChatBox");
-const inputBox=document.querySelector(".hero-input-area");
+const btnBox=document.getElementById("botButtons");
+const inputArea=document.querySelector(".hero-input-area");
 
-/* disable typing – button driven */
-inputBox.style.display="none";
+/* hide typing – button driven bot */
+inputArea.style.display="none";
 
+/* ---------- helpers ---------- */
 function botMsg(html){
   const d=document.createElement("div");
   d.className="hero-message bot";
@@ -674,17 +676,22 @@ function botMsg(html){
   chatBox.scrollTop=chatBox.scrollHeight;
 }
 
-function buttons(arr){
+function clearButtons(){
+  btnBox.innerHTML="";
+}
+
+function showButtons(buttons){
+  clearButtons();
   const wrap=document.createElement("div");
   wrap.style.display="flex";
   wrap.style.flexWrap="wrap";
   wrap.style.gap="8px";
-  wrap.style.marginTop="5px";
+  wrap.style.padding="8px";
 
-  arr.forEach(b=>{
+  buttons.forEach(b=>{
     const btn=document.createElement("button");
     btn.innerText=b.text;
-    btn.style.padding="6px 12px";
+    btn.style.padding="6px 14px";
     btn.style.borderRadius="20px";
     btn.style.border="1px solid #ffd700";
     btn.style.background="#000";
@@ -694,16 +701,17 @@ function buttons(arr){
     wrap.appendChild(btn);
   });
 
-  chatBox.appendChild(wrap);
+  btnBox.appendChild(wrap);
   chatBox.scrollTop=chatBox.scrollHeight;
 }
 
-/* ========= NAV HELPERS ========= */
-function go(id){
+/* ---------- navigation ---------- */
+function scrollToId(id){
   document.getElementById(id)?.scrollIntoView({behavior:"smooth"});
 }
 
 function contact(){
+  clearButtons();
   botMsg(
     "<b>📞 Contact Astar Events</b><br>"+
     "Aman Thacker<br>"+
@@ -711,25 +719,24 @@ function contact(){
     "📧 thackeraman05@outlook.com<br>"+
     "<a href='https://instagram.com/astar_events' target='_blank'>@astar_events</a>"
   );
-  go("footer");
+  setTimeout(()=>scrollToId("footer"),400);
 }
 
-/* ========= MAIN MENU ========= */
+/* ---------- menus ---------- */
 function mainMenu(){
   botMsg("👋 Welcome! How would you like to explore Astar Events?");
-  buttons([
+  showButtons([
     {text:"🎉 Events",action:eventsMenu},
     {text:"📸 Photos",action:photosMenu},
-    {text:"🎥 Videos",action:()=>go("videos")},
-    {text:"⭐ Reviews",action:()=>go("reviews")},
+    {text:"🎥 Videos",action:()=>scrollToId("videos")},
+    {text:"⭐ Reviews",action:()=>scrollToId("reviews")},
     {text:"📞 Contact",action:contact}
   ]);
 }
 
-/* ========= EVENTS ========= */
 function eventsMenu(){
   botMsg("Select an event category:");
-  buttons([
+  showButtons([
     {text:"💍 Wedding",action:weddingMenu},
     {text:"🌸 Decor",action:decorMenu},
     {text:"🎉 Celebration",action:celebrationMenu},
@@ -738,65 +745,59 @@ function eventsMenu(){
   ]);
 }
 
-/* ========= WEDDING ========= */
 function weddingMenu(){
   botMsg("Wedding Services 💍");
-  buttons([
-    {text:"📸 Wedding Photos",action:()=>go("gallery")},
-    {text:"🎥 Wedding Videos",action:()=>go("videos")},
+  showButtons([
+    {text:"📸 Wedding Photos",action:()=>openGallery(0)},
+    {text:"🎥 Wedding Videos",action:()=>scrollToId("videos")},
     {text:"📞 Contact",action:contact},
     {text:"⬅ Back",action:eventsMenu}
   ]);
 }
 
-/* ========= DECOR ========= */
 function decorMenu(){
   botMsg("Decor & Themes 🌸");
-  buttons([
-    {text:"📸 Decor Gallery",action:()=>go("gallery")},
+  showButtons([
+    {text:"📸 Decor Gallery",action:()=>openGallery(1)},
     {text:"📞 Contact",action:contact},
     {text:"⬅ Back",action:eventsMenu}
   ]);
 }
 
-/* ========= CELEBRATION ========= */
 function celebrationMenu(){
   botMsg("Celebrations & Parties 🎉");
-  buttons([
-    {text:"📸 Photos",action:()=>go("gallery")},
-    {text:"🎥 Videos",action:()=>go("videos")},
+  showButtons([
+    {text:"📸 Photos",action:()=>openGallery(2)},
+    {text:"🎥 Videos",action:()=>scrollToId("videos")},
     {text:"📞 Contact",action:contact},
     {text:"⬅ Back",action:eventsMenu}
   ]);
 }
 
-/* ========= CORPORATE ========= */
 function corporateMenu(){
   botMsg("Corporate Events 🏢");
-  buttons([
-    {text:"📸 Event Photos",action:()=>go("gallery")},
-    {text:"🎥 Event Videos",action:()=>go("videos")},
+  showButtons([
+    {text:"📸 Event Photos",action:()=>openGallery(3)},
+    {text:"🎥 Event Videos",action:()=>scrollToId("videos")},
     {text:"📞 Contact",action:contact},
     {text:"⬅ Back",action:eventsMenu}
   ]);
 }
 
-/* ========= PHOTOS ========= */
 function photosMenu(){
   botMsg("Photo Galleries 📸");
-  buttons([
-    {text:"💍 Wedding",action:()=>go("gallery")},
-    {text:"🌸 Decor",action:()=>go("gallery")},
-    {text:"🎉 Celebration",action:()=>go("gallery")},
+  showButtons([
+    {text:"💍 Wedding",action:()=>openGallery(0)},
+    {text:"🌸 Decor",action:()=>openGallery(1)},
+    {text:"🎉 Celebration",action:()=>openGallery(2)},
     {text:"⬅ Back",action:mainMenu}
   ]);
 }
 
-/* ========= INIT ========= */
+/* ---------- init ---------- */
 window.addEventListener("DOMContentLoaded",()=>{
-  setTimeout(mainMenu,600);
+  setTimeout(mainMenu,700);
 });
-
 
 </script>
  <!-- STEP 1: GALLERY MODAL (ADD THIS) -->
