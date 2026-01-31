@@ -620,7 +620,44 @@
   </footer>
   <script>
 /* =======================================================
-   PART 2: ASTAR EVENTS BOT (LINK-BASED, CLEAN)
+   PART 1: SLIDESHOW & VIDEO LOGIC (DO NOT TOUCH)
+======================================================= */
+const slides=document.querySelectorAll('.slides');
+let index=0;
+function showNextSlide(){
+  slides[index].classList.remove('active');
+  index=(index+1)%slides.length;
+  slides[index].classList.add('active');
+}
+setInterval(showNextSlide,3500);
+
+setTimeout(()=>{
+  const intro=document.getElementById('intro');
+  if(intro)intro.style.display='none';
+},1600);
+
+const videos=[
+  {id:"video1",src:"video1.mp4"},
+  {id:"video2",src:"video2.mp4"},
+  {id:"video3",src:"video3.mp4"}
+];
+let current=0;
+function playNextVideo(){
+  const v=document.getElementById(videos[current].id);
+  document.querySelectorAll('.event-video').forEach(x=>x.classList.remove('active'));
+  v.src=videos[current].src;
+  v.load();
+  v.classList.add("active");
+  v.play();
+  v.onended=()=>{
+    current=(current+1)%videos.length;
+    playNextVideo();
+  };
+}
+window.addEventListener("DOMContentLoaded",playNextVideo);
+
+/* =======================================================
+   PART 2: ASTAR EVENTS BOT (LINK-BASED, FINAL)
 ======================================================= */
 const chatBox=document.getElementById('heroChatBox');
 const userInput=document.getElementById('heroUserInput');
@@ -633,6 +670,9 @@ const CONTACT_CTA =
 
 const REVIEWS_LINK =
 "<br><br>⭐ <a href='#' onclick=\"document.getElementById('reviews').scrollIntoView({behavior:'smooth'});return false;\">Read Client Reviews</a>";
+
+const VIDEOS_LINK =
+"<br><br>🎥 <a href='#' onclick=\"document.querySelector('.cinematic-section').scrollIntoView({behavior:'smooth'});return false;\">Watch Event Videos</a>";
 
 const botBrain=[
 
@@ -651,9 +691,10 @@ const botBrain=[
   response:
   "<b>Wedding Events 💍</b><br>"+
   "Explore our complete wedding work here:<br><br>"+
-  "📸 <a href='weddings.html'>Wedding Photos & Gallery</a><br>"+
-  "🎥 Wedding Videos available on homepage"+
-  REVIEWS_LINK+CONTACT_CTA
+  "📸 <a href='weddings.html'>Wedding Photos & Gallery</a>"+
+  VIDEOS_LINK+
+  REVIEWS_LINK+
+  CONTACT_CTA
 },
 
 /* ---------- BIRTHDAYS ---------- */
@@ -663,7 +704,8 @@ const botBrain=[
   "<b>Birthday & Celebration Events 🎉</b><br>"+
   "See our birthday event gallery:<br><br>"+
   "📸 <a href='birthdays.html'>Birthday Photos & Gallery</a>"+
-  REVIEWS_LINK+CONTACT_CTA
+  REVIEWS_LINK+
+  CONTACT_CTA
 },
 
 /* ---------- CORPORATE ---------- */
@@ -673,7 +715,8 @@ const botBrain=[
   "<b>Corporate Events 🏢</b><br>"+
   "View our corporate event work:<br><br>"+
   "📸 <a href='corporate.html'>Corporate Events Gallery</a>"+
-  REVIEWS_LINK+CONTACT_CTA
+  REVIEWS_LINK+
+  CONTACT_CTA
 },
 
 /* ---------- PHOTOS (GENERIC) ---------- */
@@ -685,7 +728,8 @@ const botBrain=[
   "💍 <a href='weddings.html'>Wedding Gallery</a><br>"+
   "🎂 <a href='birthdays.html'>Birthday Gallery</a><br>"+
   "🏢 <a href='corporate.html'>Corporate Gallery</a>"+
-  REVIEWS_LINK+CONTACT_CTA
+  REVIEWS_LINK+
+  CONTACT_CTA
 },
 
 /* ---------- VIDEOS ---------- */
@@ -693,9 +737,10 @@ const botBrain=[
   keywords:["video","videos","films","reels"],
   response:
   "<b>Event Videos 🎥</b><br>"+
-  "Watch cinematic event videos on our homepage below."+
-  "<br><br>🎥 <a href='#' onclick=\"document.querySelector('.cinematic-section').scrollIntoView({behavior:'smooth'});return false;\">Go to Videos</a>"+
-  REVIEWS_LINK+CONTACT_CTA
+  "Watch cinematic event videos on our homepage."+
+  VIDEOS_LINK+
+  REVIEWS_LINK+
+  CONTACT_CTA
 },
 
 /* ---------- REVIEWS ---------- */
@@ -704,7 +749,8 @@ const botBrain=[
   response:
   "<b>Client Reviews ⭐</b><br>"+
   "See what our clients say about us."+
-  REVIEWS_LINK+CONTACT_CTA
+  REVIEWS_LINK+
+  CONTACT_CTA
 },
 
 /* ---------- PRICING ---------- */
@@ -775,8 +821,6 @@ userInput.addEventListener("keypress",e=>{
   if(e.key==="Enter")handleHeroChat();
 });
 </script>
-
- 
 
 </body>
 </html>
